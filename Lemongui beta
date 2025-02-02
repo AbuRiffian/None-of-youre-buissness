@@ -34,7 +34,7 @@ local TextLabel = Instance.new("TextLabel")
 --Properties:
 
 vcCFDfsd.Name = "vcCFDfsd"
-vcCFDfsd.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+vcCFDfsd.Parent = game.CoreGui
 vcCFDfsd.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 Frame.Parent = vcCFDfsd
