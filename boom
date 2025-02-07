@@ -1,6 +1,5 @@
---FE Bomb Vest Script
---Edited (FE Functions, new Tool Name and different cursor on tool selection) by diminish.
-local Me = game:GetService("Players").LocalPlayer --You cannot use this on someone else.
+--NOT MINE
+local Me = game:GetService("Players").LocalPlayer
 local Char = Me.Character
 local Torso = Char.Torso
 local TickWait = 1
@@ -12,15 +11,15 @@ Tool.Name = "Bomb Vest"
  
 local Position = Vector3.new(0,100,0)
 function NewPart(Parent)
-    local Part = Instance.new("Part", Parent)
-    Part.CanCollide = false
-    Part.FormFactor = "Custom"
-    Part.Position = Position
-    Part.TopSurface = "Smooth"
-    Part.BottomSurface = "Smooth"
-    Part.BrickColor = BrickColor.new(Color)
-    Position = Position + Vector3.new(0,Part.Size.Y + 10,0)
-    return Part
+   local Part = Instance.new("Part", Parent)
+   Part.CanCollide = false
+   Part.FormFactor = "Custom"
+   Part.Position = Position
+   Part.TopSurface = "Smooth"
+   Part.BottomSurface = "Smooth"
+   Part.BrickColor = BrickColor.new(Color)
+   Position = Position + Vector3.new(0,Part.Size.Y + 10,0)
+   return Part
 end
  
 local Model = Char:FindFirstChild("Bomb")
@@ -44,7 +43,7 @@ Beep.SoundId = "http://www.roblox.com/asset/?id=188588790"
 local ExplodeSound = Instance.new("Sound", Belt)
 ExplodeSound.SoundId = "http://www.roblox.com/asset/?id="..(tonumber((math.ceil(1776.66^2)+17).."."..string.rep("36",3))*77)+0.00003 --144507765
 ExplodeSound.Pitch = 2.8
-ExplodeSound.Volume = 3
+ExplodeSound.Volume = 100
  
 local Back = NewPart(Model)
 Back.Size = Vector3.new(1.5,1.5,0.5)
@@ -82,54 +81,38 @@ Weld.Part1 = Torso
 Weld.C0 = CFrame.new(-0.65,0.1,0.5)
  
 Tool.Selected:connect(function(Mouse)
-    TickWait = 0.3
-    Mouse.Icon = "http://www.roblox.com/asset/?id=138624642"
-   
-    Mouse.Button1Down:connect(function()
-        if Dead == false then
-            Dead = true
-            ExplodeSound:Play()
-            wait(1.4)
-            game:GetService'ReplicatedStorage'.ITEM_PURCHASE:InvokeServer('meme', '8', '1527622')
-lp = game:GetService'Players'.LocalPlayer
-hat = lp.Character:WaitForChild'meme'
-hat.Handle.Transparency=1
-hat.Handle.Mesh:Remove()
-        end
-    end)
+   TickWait = 0.3
+   Mouse.Icon = "http://www.roblox.com/asset/?id=9109985"
+ 
+   Mouse.Button1Down:connect(function()
+       if Dead == false then
+           Dead = true
+           ExplodeSound:Play()
+           wait(1.4)
+           local Explosion = Instance.new("Explosion", Workspace)
+           Explosion.Position = Belt.Position
+           Explosion.BlastPressure = 100000
+           Explosion.DestroyJointRadiusPercent = 0.7
+           Explosion.ExplosionType = "CratersAndDebris"
+           Explosion.BlastRadius = 50
+           Explosion.Hit:connect(function(Part, Distance)
+               Part.Anchored = false
+               if Distance <= 10 then
+                   Part:BreakJoints()
+               end
+           end)
+       end
+   end)
 end)
  
 Tool.Deselected:connect(function()
-    TickWait = 1
+   TickWait = 1
 end)
  
 coroutine.wrap(function()
-    repeat
-        wait(TickWait)
-        Light.Enabled = not Light.Enabled
-        Beep:Play()
-    until Dead == true
+   repeat
+       wait(TickWait)
+       Light.Enabled = not Light.Enabled
+       Beep:Play()
+   until Dead == true
 end)()
-local grabknife = h
-function kill(plrtokill)
---boom--
-assets = {540034631, 178993946, 461493477, 110288809}
-me = game:GetService'Players'.LocalPlayer.Character:FindFirstChildOfClass'Humanoid'
-for i,v in pairs(me.Parent:GetChildren()) do
-if v:IsA'Accoutrement' then v.Parent = nil end
-end
-for i,v in pairs(assets) do
-  game:GetService'ReplicatedStorage'.ITEM_PURCHASE:InvokeServer('xdd', tostring(game:GetService'MarketplaceService':GetProductInfo(v).AssetTypeId), v)
-end
-game:GetService'ReplicatedStorage'.ITEM_PURCHASE:InvokeServer('boom', '8', '1527622')
-game.Players.LocalPlayer.Character.boom.BootScript.Parent=workspace[plrtokill]
-print(workspace[plrtokill] .. " got Bombed")
-
-end
-
-game:GetService'RunService'.Stepped:wait()
-grabknife.Parent = plr.Character
-for i = 1,3 do
-local lol = lp:FindFirstChildOfClass'Backpack':FindFirstChildOfClass'HopperBin'
-if lol:FindFirstChild'LocalScript' then lol:Destroy() end
-end
