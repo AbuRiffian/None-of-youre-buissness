@@ -1,0 +1,41 @@
+local power = 750
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local function disableCollisions(character)
+	if character then
+		local parts = {"Head", "UpperTorso", "LowerTorso", "HumanoidRootPart"}
+		for _, partName in pairs(parts) do
+			local part = character:FindFirstChild(partName)
+			if part then
+				part.CanCollide = false
+			end
+		end
+	end
+end
+
+Players.PlayerAdded:Connect(function(player)
+	player.CharacterAdded:Connect(function(character)
+		disableCollisions(character)
+	end)
+end)
+
+for _, player in pairs(Players:GetPlayers()) do
+	if player.Character then
+		disableCollisions(player.Character)
+	end
+end
+
+wait(0.1)
+
+local localPlayer = Players.LocalPlayer
+if localPlayer and localPlayer.Character then
+	local rootPart = localPlayer.Character:FindFirstChild("HumanoidRootPart")
+	if rootPart then
+		local bambam = Instance.new("BodyThrust")
+		bambam.Parent = rootPart
+		bambam.Force = Vector3.new(power, 0, power)
+		bambam.Location = rootPart.Position
+	end
+end
