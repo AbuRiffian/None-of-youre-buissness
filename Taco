@@ -1,0 +1,66 @@
+--MMMMM Chavez
+--Made by thatamazighi
+
+local G2L = {};
+
+G2L["2"] = Instance.new("Tool", game.Players.LocalPlayer:WaitForChild("Backpack"));
+G2L["2"]["ToolTip"] = [[Mmm, Chávez.]];
+G2L["2"]["Name"] = [[Chavez]];
+
+G2L["3"] = Instance.new("Part", G2L["2"]);
+G2L["3"]["BottomSurface"] = Enum.SurfaceType.Smooth;
+G2L["3"]["TopSurface"] = Enum.SurfaceType.Smooth;
+G2L["3"]["Locked"] = true;
+G2L["3"]["Size"] = Vector3.new(1, 0.8, 1);
+G2L["3"]["Color"] = Color3.fromRGB(206, 206, 206);
+G2L["3"]["Rotation"] = Vector3.new(180, 0, 180);
+G2L["3"]["Name"] = [[Handle]];
+
+G2L["4"] = Instance.new("SpecialMesh", G2L["3"]);
+G2L["4"]["MeshId"] = [[http://www.roblox.com/asset/?id=14846869]];
+G2L["4"]["TextureId"] = [[http://www.roblox.com/asset/?id=14846834]];
+G2L["4"]["MeshType"] = Enum.MeshType.FileMesh;
+G2L["4"]["Scale"] = Vector3.new(0.7, 0.7, 0.7);
+
+G2L["5"] = Instance.new("Sound", G2L["3"]);
+G2L["5"]["Volume"] = 0.3;
+G2L["5"]["Name"] = [[Eat]];
+G2L["5"]["SoundId"] = [[http://www.roblox.com/asset/?id=15047813]];
+
+G2L["6"] = Instance.new("Sound", G2L["3"]);
+G2L["6"]["Volume"] = 1;
+G2L["6"]["Name"] = [[MM]];
+G2L["6"]["SoundId"] = [[http://www.roblox.com/asset/?id=15174422]];
+
+G2L["7"] = Instance.new("LocalScript", G2L["3"]);
+
+local function C_7()
+	local script = G2L["7"];
+
+	local Tool = script.Parent.Parent
+	local Eat,MM = script.Parent.Eat,script.Parent.MM
+	local UIS = game:GetService("UserInputService")
+	local Eating = CFrame.new(0.121005774, -1.17626426, 1.151003, -0.571957648, 0.032301072, -0.819646955, 0.0999610648, 0.994521916, -0.0305611696, 0.814169705, -0.0994124785, -0.572053254)
+	local Holding = CFrame.new(0, 0, 0)
+	local eating = false
+
+	Tool.Equipped:Connect(function()
+		MM:Play()
+	end)
+
+	UIS.InputBegan:Connect(function(input, gameProcessedEvent)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			if Tool.Parent:IsA("Model") and Tool.Parent:FindFirstChild("Humanoid") and eating == false then
+				Tool.Grip = Eating
+				Eat:Play()
+				eating = true
+				wait(1.75)
+				Tool.Grip = Holding
+				eating = false
+			end
+		end
+	end)
+end;
+task.spawn(C_7);
+
+return G2L["1"], require;
