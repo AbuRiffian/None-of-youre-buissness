@@ -1,0 +1,63 @@
+local G2L = {};
+
+G2L["2"] = Instance.new("Tool", game.Players.LocalPlayer:WaitForChild("Backpack"));
+G2L["2"]["Name"] = [[Cheezburger]];
+
+G2L["3"] = Instance.new("Part", G2L["2"]);
+G2L["3"]["AssemblyAngularVelocity"] = Vector3.new(0.00351, 0, 0.01434);
+G2L["3"]["BottomSurface"] = Enum.SurfaceType.Smooth;
+G2L["3"]["AssemblyLinearVelocity"] = Vector3.new(0.00246, -0.00678, 0.00222);
+G2L["3"]["TopSurface"] = Enum.SurfaceType.Smooth;
+G2L["3"]["Size"] = Vector3.new(1, 0.8, 1);
+G2L["3"]["Color"] = Color3.fromRGB(206, 206, 206);
+G2L["3"]["Rotation"] = Vector3.new(0, -90, 0);
+G2L["3"]["Name"] = [[Handle]];
+
+G2L["4"] = Instance.new("Sound", G2L["3"]);
+G2L["4"]["Volume"] = 1;
+G2L["4"]["Name"] = [[DrinkSound]];
+G2L["4"]["SoundId"] = [[http://www.roblox.com/asset/?id=16647579]];
+
+G2L["5"] = Instance.new("Sound", G2L["3"]);
+G2L["5"]["Volume"] = 1;
+G2L["5"]["Name"] = [[OpenSound]];
+G2L["5"]["SoundId"] = [[http://www.roblox.com/asset/?id=16647570]];
+
+G2L["6"] = Instance.new("SpecialMesh", G2L["3"]);
+G2L["6"]["MeshId"] = [[http://www.roblox.com/asset/?id=16646125]];
+G2L["6"]["TextureId"] = [[http://www.roblox.com/asset/?id=16432575]];
+G2L["6"]["MeshType"] = Enum.MeshType.FileMesh;
+
+G2L["7"] = Instance.new("LocalScript", G2L["3"]);
+
+local function C_7()
+	local script = G2L["7"];
+
+	local tool = script.Parent.Parent
+	local mmchezburger = script.Parent.DrinkSound
+	local please = script.Parent.OpenSound
+	local uis = game:GetService("UserInputService")
+	local cooldown = mmchezburger.TimeLength
+	local Eating = CFrame.new(0.121005774, -1.17626426, 1.151003, -0.571957648, 0.032301072, -0.819646955, 0.0999610648, 0.994521916, -0.0305611696, 0.814169705, -0.0994124785, -0.572053254)
+	local Holding = CFrame.new()
+
+	tool.Equipped:Connect(function()
+		please:Play()
+	end)
+
+	uis.InputBegan:Connect(function(input, gameProcessedEvent)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			if tool.Parent:IsA("Model") and tool.Parent:FindFirstChild("Humanoid") then
+				tool.Grip = Eating
+				mmchezburger:Play()
+				wait(1.097)
+				tool.Grip = Holding
+			end
+		end
+	end)
+
+end;
+
+task.spawn(C_7);
+
+return G2L["1"], require;
